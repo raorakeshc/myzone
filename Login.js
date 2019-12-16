@@ -15,7 +15,7 @@ export default class Login extends React.Component {
         const { email } = this.state;
         const { password } = this.state;
         alert(email + password);
-        const response = fetch('http://192.168.0.3:8080/Ldap/authenticate', {
+        const response = fetch('http://192.168.0.93:8080/myzone/authenticate', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -27,7 +27,14 @@ export default class Login extends React.Component {
             }),
         }).then((response) => response.json())
             .then((responseJson) => {
-                alert(responseJson["response"]);
+                if(responseJson["response"])
+                {
+                    alert("if--->"+responseJson["response"]+email);
+                    this.props.navigation.navigate('DashBoard',{'email': email});
+                }else{
+                    alert("else--->"+responseJson["response"]+email);
+                    this.props.navigation.navigate('DashBoard',{'email': email});
+                }
             })
             .catch((error) => {
                 console.error(error);
